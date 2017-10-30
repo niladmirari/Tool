@@ -1,14 +1,33 @@
 use strict;
-use Data::Dumper;
+
 # vm で動かす場合は　マウス統合を切らないとなんか　チャタるっていうかになる
+my $on =  return_on ();
+ my $TargetGP = 10 * 1000000; #使い切りたいGP M 
+ my $max = int ($TargetGP / 60000);
+ my $maxGP = $max * 12 * 5000;
+
+for my $itr (1..$max) {
+
+ gacha($on,12);# moretahn 2;
+ nouhin($on,6);
+     my $lastGP = $TargetGP - $itr * 60000 ;
+    # claning
+    print "[+]Phase $itr / $max .... ( it will use $lastGP GP : Target is $TargetGP \n";
+}
+
+## ここまで。
+
+
 sub x {
  my $q = shift;
-# system ("xdotool mousemove " . ($q->[0]) +6 . " " . ($q->[1]) +6);
  my $params = join(" ",@$q);
  system ("xdotool mousemove " . $params);
 }
 
-my $on = {
+
+sub return_on {
+
+return {
   tap =>{
      gacha_pull => [192,656],
      pre_gp_window  => [271,661],
@@ -45,21 +64,8 @@ my $on = {
     ok => [402,653,"click","1"],
     del=> [896,265,"click","1"],
   },
-};
-
- my $TargetGP = 10 * 1000000; #使い切りたいGP M 
- my $max = int ($TargetGP / 60000);
- my $maxGP = $max * 12 * 5000;
-
-for my $itr (1..$max) {
-
- gacha($on,12);# moretahn 2;
- nouhin($on,6);
-     my $lastGP = $TargetGP - $itr * 60000 ;
-    # claning
-    print "[+]Phase $itr / $max .... ( it will use $lastGP GP : Target is $TargetGP \n";
 }
-
+}
 
 sub gacha {# gacha のGUI的に２回以上のパラメータ入れてね
  my $on = shift;
